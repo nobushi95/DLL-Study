@@ -1,4 +1,5 @@
 ﻿#include "pch.h"
+#include "SampleCppDLL.h"
 
 BOOL APIENTRY DllMain(HMODULE hModule,
                        DWORD  ul_reason_for_call,
@@ -16,3 +17,7 @@ BOOL APIENTRY DllMain(HMODULE hModule,
     return TRUE;
 }
 
+DLLEXPORT BOOL TextOutHelloWorldDLL(HDC hdc, int x, int y, LPCWSTR text)
+{
+    return TextOutW(hdc, x, y, text, lstrlenW(text));
+}
