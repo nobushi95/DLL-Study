@@ -1,5 +1,6 @@
 ﻿#include "framework.h"
 #include "UseSampleCppDLLAsLIB.h"
+#include "SampleCppDLL.h"
 
 #define MAX_LOADSTRING 100
 
@@ -114,7 +115,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: HDC を使用する描画コードをここに追加してください...
+            auto text = L"Hello World DLL !!";
+            TextOutHelloWorldDLL(hdc, 10, 10, text);
             EndPaint(hWnd, &ps);
         }
         break;
