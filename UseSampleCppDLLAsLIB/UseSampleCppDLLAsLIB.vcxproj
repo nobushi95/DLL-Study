@@ -46,12 +46,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>bin</OutDir>
     <IntDir>obj</IntDir>
-    <IncludePath>$(SolutionDir)SampleCppDLL;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>bin</OutDir>
     <IntDir>obj</IntDir>
-    <IncludePath>$(SolutionDir)SampleCppDLL;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
