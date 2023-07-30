@@ -115,7 +115,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
-            auto text = L"Hello World DLL !!";
+            auto text = L"Hello World DLL as LIB !!";
             TextOutHelloWorldDLL(hdc, 10, 10, text);
             EndPaint(hWnd, &ps);
         }
