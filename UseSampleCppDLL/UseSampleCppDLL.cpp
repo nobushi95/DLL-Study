@@ -1,5 +1,6 @@
 ﻿#include "framework.h"
 #include "UseSampleCppDLL.h"
+#include <functional>
 
 #define MAX_LOADSTRING 100
 
@@ -93,8 +94,27 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+    static HMODULE dllMod = nullptr;
+    static std::function<BOOL(HDC, int, int, LPCWSTR)> textOutHelloWorldDLL;
     switch (message)
     {
+        case WM_CREATE:
+        {
+            dllMod = LoadLibraryW(L"SampleCppDLL.dll");
+            if (dllMod == nullptr)
+            {
+                MessageBoxW(hWnd, L"Load DLL failed.", L"Error", MB_OK | MB_ICONERROR);
+                DestroyWindow(hWnd);
+                return 0;
+            }
+            textOutHelloWorldDLL = reinterpret_cast<BOOL(*)(HDC, int, int, LPCWSTR)>(GetProcAddress(dllMod, "TextOutHelloWorldDLL"));
+            if (!textOutHelloWorldDLL)
+            {
+                MessageBoxW(hWnd, L"GetProcAddress failed.", L"Error", MB_OK | MB_ICONERROR);
+                DestroyWindow(hWnd);
+                return 0;
+            }
+        }
         case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
@@ -116,13 +136,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: HDC を使用する描画コードをここに追加してください...
+            textOutHelloWorldDLL(hdc, 10, 10, L"Hello World DLL !!");
             EndPaint(hWnd, &ps);
         }
         break;
         case WM_DESTROY:
+        {
+            if (dllMod != nullptr)
+                FreeLibrary(dllMod);
             PostQuitMessage(0);
             break;
+        }
         default:
             return DefWindowProc(hWnd, message, wParam, lParam);
     }
