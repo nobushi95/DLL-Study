@@ -1,10 +1,18 @@
 ﻿#pragma once
 #include <Windows.h>
 
-#ifdef __cplusplus
-#define DLLEXPORT extern "C" __declspec(dllexport)
+#ifdef SAMPLECPPDLL_EXPORTS
+#define DLLDIRECTION __declspec(dllexport)
 #else
-#define DLLEXPORT __declspec(dllexport)
+#define DLLDIRECTION __declspec(dllimport)
 #endif
 
-DLLEXPORT BOOL TextOutHelloWorldDLL(HDC hdc, int x, int y, LPCWSTR text);
+#ifdef __cplusplus
+#define DLLATTRIBUTE extern "C" DLLDIRECTION
+#else
+#define DLLATTRIBUTE DLLDIRECTION
+#endif
+
+typedef BOOL(*LPFUNC_TEXTOUT_HELLOWORLD_DLL)(HDC, int, int, LPCWSTR);
+
+DLLATTRIBUTE BOOL TextOutHelloWorldDLL(HDC hdc, int x, int y, LPCWSTR text);

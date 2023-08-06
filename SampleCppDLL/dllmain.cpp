@@ -17,7 +17,7 @@ BOOL APIENTRY DllMain(HMODULE hModule,
     return TRUE;
 }
 
-DLLEXPORT BOOL TextOutHelloWorldDLL(HDC hdc, int x, int y, LPCWSTR text)
+BOOL TextOutHelloWorldDLL(HDC hdc, int x, int y, LPCWSTR text)
 {
     return TextOutW(hdc, x, y, text, lstrlenW(text));
 }
