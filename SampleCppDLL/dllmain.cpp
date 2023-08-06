@@ -1,5 +1,5 @@
 ﻿#include "pch.h"
-#include "SampleCppDLL.h"
+#include "export/SampleCppDLL.h"
 
 BOOL APIENTRY DllMain(HMODULE hModule,
                        DWORD  ul_reason_for_call,
